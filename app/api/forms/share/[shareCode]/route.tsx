@@ -23,7 +23,7 @@ export async function GET(
 
     const form = await Form.findOne({
       shareCode: params.shareCode,
-      status: "published", // only return published forms
+      status: "published", 
     });
 
     const user = await User.findOne({ _id: form.userId });
@@ -41,8 +41,9 @@ export async function GET(
       );
     }
 
-    const alreadySubmitted = await Response.find({ formId: form._id, userId: user._id });
-    if (alreadySubmitted) {
+    const alreadySubmitted = await Response.find({ formId: form._id, userId: reqUser._id });
+
+    if (alreadySubmitted.length > 0) {
       return NextResponse.json(
         { message: "You have already submitted this form. Please try another one." },
         { status: 400 }
