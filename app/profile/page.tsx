@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2, Pencil, Save, Lock, LockOpen, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion"; // Import framer-motion
 
 interface User {
   _id: string;
@@ -160,65 +161,68 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Alert */}
-      {editMode && (
-        <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-2 mb-4 rounded text-sm">
-          You are in edit mode. Make changes and click Save.
-        </div>
-      )}
-
       {/* Profile Form */}
-      <Card>
-        <CardContent className="space-y-4 p-6">
-          {fields.map((field, idx) => (
-            <div key={idx}>
-              <Label>{field.label}</Label>
-              <Input
-                value={(formData[field.key as keyof User] || "")}
-                onChange={(e) => handleChange(field.key as keyof User, e.target.value)}
-                readOnly={!editMode || field.readonly}
-              />
-            </div>
-          ))}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card>
+          <CardContent className="space-y-4 p-6">
+            {fields.map((field, idx) => (
+              <div key={idx}>
+                <Label>{field.label}</Label>
+                <Input
+                  value={(formData[field.key as keyof User] || "")}
+                  onChange={(e) => handleChange(field.key as keyof User, e.target.value)}
+                  readOnly={!editMode || field.readonly}
+                />
+              </div>
+            ))}
 
-          {editMode && (
-            <Button onClick={handleSave} disabled={saving}>
-              {saving ? (
-                <Loader2 className="animate-spin h-4 w-4 mr-2" />
-              ) : (
-                <Save className="h-4 w-4 mr-2" />
-              )}
-              Save Changes
-            </Button>
-          )}
-        </CardContent>
-      </Card>
+            {editMode && (
+              <Button onClick={handleSave} disabled={saving}>
+                {saving ? (
+                  <Loader2 className="animate-spin h-4 w-4 mr-2" />
+                ) : (
+                  <Save className="h-4 w-4 mr-2" />
+                )}
+                Save Changes
+              </Button>
+            )}
+          </CardContent>
+        </Card>
+      </motion.div>
 
       {/* Password Change Section */}
       {showPasswordEdit && (
-        <Card className="mt-6">
-          <CardContent className="space-y-4 p-6">
-            <h2 className="text-xl font-semibold">Change Password</h2>
-            <div>
-              <Label>New Password</Label>
-              <Input
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-            </div>
-            <Button onClick={handlePasswordChange} disabled={passwordLoading}>
-              {passwordLoading ? (
-                <>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="mt-6"
+        >
+          <Card>
+            <CardContent className="space-y-4 p-6">
+              <h2 className="text-xl font-semibold">Change Password</h2>
+              <div>
+                <Label>New Password</Label>
+                <Input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
+              <Button onClick={handlePasswordChange} disabled={passwordLoading}>
+                {passwordLoading ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Updating...
-                </>
-              ) : (
-                "Update Password"
-              )}
-            </Button>
-          </CardContent>
-        </Card>
+                ) : (
+                  "Update Password"
+                )}
+              </Button>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
     </div>
   );

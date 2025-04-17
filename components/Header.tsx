@@ -8,6 +8,7 @@ import {
   LogOut,
   LucideLayoutDashboard,
   Menu,
+  MessageSquare,
   Search,
   User,
   X,
@@ -50,6 +51,7 @@ export function Header() {
     { name: "Dashboard", href: "/dashboard", icon: LucideLayoutDashboard },
     { name: "Forms", href: "/forms", icon: FileText },
     { name: "Find", href: "/forms/share", icon: Search },
+    { name : "Responses" , href : "/responses" , icon : MessageSquare},
     { name: "Profile", href: "/profile", icon: User },
   ];
 

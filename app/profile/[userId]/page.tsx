@@ -88,27 +88,33 @@ export default function ProfilePage() {
       </div>
 
       {/* Profile Card */}
-      <Card className="bg-white dark:bg-black border border-black dark:border-white rounded-xl">
-        <CardContent className="p-4 sm:p-6 space-y-6">
-          {fields.map((field, idx) => {
-            const value = user[field.key as keyof User];
-            return (
-              <div key={idx}>
-                <Label className="text-sm text-muted-foreground">
-                  {field.label}
-                </Label>
-                <p className="text-base font-medium mt-1 break-words">
-                  {value || (
-                    <span className="text-gray-500 dark:text-gray-400">
-                      Not provided
-                    </span>
-                  )}
-                </p>
-              </div>
-            );
-          })}
-        </CardContent>
-      </Card>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+      >
+        <Card className="bg-white dark:bg-black border border-black dark:border-white rounded-xl">
+          <CardContent className="p-4 sm:p-6 space-y-6">
+            {fields.map((field, idx) => {
+              const value = user[field.key as keyof User];
+              return (
+                <div key={idx}>
+                  <Label className="text-sm text-muted-foreground">
+                    {field.label}
+                  </Label>
+                  <p className="text-base font-medium mt-1 break-words">
+                    {value || (
+                      <span className="text-gray-500 dark:text-gray-400">
+                        Not provided
+                      </span>
+                    )}
+                  </p>
+                </div>
+              );
+            })}
+          </CardContent>
+        </Card>
+      </motion.div>
     </motion.div>
   );
 }

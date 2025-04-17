@@ -7,6 +7,7 @@ import { PlusCircle, LayoutList, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs } from "@/components/ui/tabs";
 import FormTabs from "@/components/forms/FormTabs";
+import { motion } from "framer-motion";  // Import motion from framer-motion
 
 export interface Form {
   shareCode: string;
@@ -42,8 +43,13 @@ export default function Forms() {
           </p>
         </div>
 
-        {/* Controls */}
-        <div className="flex flex-wrap items-center gap-2">
+        {/* Controls with Animated View Switch */}
+        <motion.div
+          className="flex flex-wrap items-center gap-2"
+          initial={{ opacity: 0 }}  // Start with zero opacity
+          animate={{ opacity: 1 }}  // Fade in
+          transition={{ duration: 0.5 }}  // Smooth transition
+        >
           <Button
             variant={view === "list" ? "default" : "outline"}
             onClick={() => setView("list")}
@@ -66,16 +72,29 @@ export default function Forms() {
               <span className="text-sm">Create Form</span>
             </Link>
           </Button>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Tabs Content */}
+      {/* Tabs Content with Animation */}
       {isLoading ? (
-        <div className="text-muted-foreground text-center">Loading forms...</div>
+        <motion.div
+          className="text-muted-foreground text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          Loading forms...
+        </motion.div>
       ) : (
-        <Tabs defaultValue="draft" className="space-y-4">
-          <FormTabs forms={forms || []} view={view} />
-        </Tabs>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Tabs defaultValue="draft" className="space-y-4">
+            <FormTabs forms={forms || []} view={view} />
+          </Tabs>
+        </motion.div>
       )}
     </div>
   );
