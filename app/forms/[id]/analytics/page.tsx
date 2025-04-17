@@ -88,7 +88,6 @@ export default function Analytics({ params }: AnalyticsProps) {
   const [activeTab, setActiveTab] = useState("overview");
   const router = useRouter();
 
-
   const { data: analytics, isLoading } = useQuery<AnalyticsData>({
     queryKey: ['analytics', params.id],
     queryFn: async () => {
@@ -135,16 +134,6 @@ export default function Analytics({ params }: AnalyticsProps) {
               Last updated: {format(new Date(), "MMM d, yyyy HH:mm")}
             </p>
           </div>
-        </div>
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-          <Button variant="outline" size="sm">
-            <Share2 className="h-4 w-4 mr-2" />
-            Share
-          </Button>
-          <Button variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-2" />
-            Export
-          </Button>
         </div>
       </div>
 
